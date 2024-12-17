@@ -3,13 +3,23 @@ from streamlit_option_menu import option_menu
 
 with st.sidebar:
 
+    with st.expander("**Image Customization**", icon="🛠️"):
+    
         # Style selection using st.radio
-    style = st.radio(
-        "Select Style",
-        options=["Default", "Photorealistic", "Anime"],
-        index=0,
-        help="Choose the style for the generated image."
-    )
+        style = st.radio(label="Select Style",options=["Default", "Photorealistic", "Anime"],
+            index=0,
+            horizontal=True,
+            help="Choose the style for the generated image."
+        )
+
+        # Image resolution selection using st.radio
+        image_resolution = st.radio(
+            "Image Resolution",
+            options=["512x512", "768x768", "1024x1024"],
+            index=0,
+            horizontal=True,
+            help="Select the resolution of the generated image."
+        )
     
     with st.expander("**Parameter Customization**", icon="🛠️"):
         # Inference Steps
@@ -31,13 +41,6 @@ with st.sidebar:
             step=0.5,
             help="Controls how strongly the model follows the prompt. Higher values produce images closer to the prompt.Lower values enables Creative Freedom."
         )
-         # Image resolution selection using st.radio
-        image_resolution = st.radio(
-            "Image Resolution",
-            options=["512x512", "768x768", "1024x1024"],
-            index=0,
-            help="Select the resolution of the generated image."
-        )
 
 option=option_menu(menu_title="",options=["Generate with Prompt","Generate with Image"],
             icons=["camera","camera"],
@@ -47,6 +50,18 @@ option=option_menu(menu_title="",options=["Generate with Prompt","Generate with 
 if option=="Generate with Prompt":
     prompt=st.text_input("Enter your prompt")
 else:
-    st.file_uploader("Upload an Image",type=["jpeg","jpg","png"])
+    image=st.file_uploader("Upload an Image",type=["jpeg","jpg","png"])
+    if image:
+        st.image(image)
+        
+        # Add a download button
+        st.download_button(
+            label="Download Image",
+            data=image,
+            file_name="generated_image.png",
+            mime="image/png",
+            help="Click to download the generated image as a PNG file."
+        )
 
-st.button("✨Generate")
+if st.button("✨Generate"):
+    st.write ("Hello")
