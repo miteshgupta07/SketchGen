@@ -1,17 +1,9 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler
-# import torch
+from huggingface_hub import InferenceClient
 
-# Initialize Stable Diffusion model
-# @st.cache_resource
-# def load_model():
-#     model_id = "stabilityai/stable-diffusion-2-1-base"
-#     scheduler = EulerDiscreteScheduler.from_pretrained(model_id, subfolder="scheduler")
-#     pipe = StableDiffusionPipeline.from_pretrained(model_id, scheduler=scheduler, torch_dtype=torch.float16)
-#     return pipe
 
-# pipe = load_model()
+client = InferenceClient("stabilityai/stable-diffusion-3.5-large", token="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")
 
 # Sidebar: Customization options
 with st.sidebar:
@@ -59,16 +51,15 @@ option=option_menu(menu_title="",options=["Generate with Prompt","Generate with 
             icons=["camera","camera"],
             orientation="horizontal",
             default_index=0)
+
 # Generate based on user selection
 if option == "Generate with Prompt":
     prompt = st.text_input("Enter your prompt")
     if st.button("✨ Generate"):
         if prompt:
             with st.spinner("Generating image..."):
-                st.write("Hello")
-                # image = pipe(prompt, guidance_scale=guidance_scale, num_inference_steps=inference_steps).images[0]
-                st.image(image, caption="Generated Image")
-                st.download_button("Download Image", image.to_bytes(), file_name="generated_image.png", mime="image/png")
+                image = client.text_to_image(prompt)
+                st.image(image)
         else:
             st.error("Please enter a prompt!")
 else:
@@ -77,7 +68,4 @@ else:
         st.image(uploaded_image, caption="Uploaded Image")
     if st.button("✨ Generate"):
         with st.spinner("Generating image..."):
-            # image = pipe(prompt=None, init_image=uploaded_image, guidance_scale=guidance_scale, num_inference_steps=inference_steps).images[0]
-            # st.image(image, caption="Generated Image")
-            # st.download_button("Download Image", image.to_bytes(), file_name="generated_image.png", mime="image/png")
-            st.write("Hello")
+            st.write("ffd")
