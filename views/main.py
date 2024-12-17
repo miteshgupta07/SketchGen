@@ -2,8 +2,12 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from huggingface_hub import InferenceClient
 
+@st.cache_resource
+def load_model():
+    client = InferenceClient("stabilityai/stable-diffusion-3.5-large", token="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")
+    return client
 
-client = InferenceClient("stabilityai/stable-diffusion-3.5-large", token="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")
+client=load_model()
 
 # Sidebar: Customization options
 with st.sidebar:
