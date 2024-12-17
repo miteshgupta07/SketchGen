@@ -1,8 +1,8 @@
 import streamlit as st
 
 # Setting the title for the page
-st.title("About the Chatbot 🤖")
-
+st.title("SketchGen")
+st.write("Description")
 # Introduction Section
 st.header("🌟 Introduction")
 st.write("""
