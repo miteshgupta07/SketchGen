@@ -2,11 +2,15 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from huggingface_hub import InferenceClient
 from io import BytesIO
+from PIL import Image
+import os
+
+hf_token=os.getenv("HF_TOKEN")
 
 @st.cache_resource
 def load_model():
-    text2img_client = InferenceClient("stabilityai/stable-diffusion-3.5-large", token="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")
-    img2img_client = InferenceClient("stabilityai/stable-diffusion-xl-refiner-1.0", token="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")
+    text2img_client = InferenceClient("stabilityai/stable-diffusion-3.5-large", token="hf_token")
+    img2img_client = InferenceClient("stabilityai/stable-diffusion-xl-refiner-1.0", token="hf_token")
     return text2img_client,img2img_client
 
 text2img_client,img2img_client=load_model()
@@ -68,37 +72,36 @@ if option == "Generate with Prompt":
         generate_button = st.button("✨ Generate", use_container_width=True, type='primary')
 
     # Generate Image Logic
-    # if generate_button:
-    #     if prompt:
-    #         with st.spinner("Generating image..."):
-    #             try:
-    #                 # Add style to the prompt if not default
-    #                 if style != "Default":
-    #                     prompt += f" in {style} style."
+    if generate_button:
+        if prompt:
+            with st.spinner("Generating image..."):
+                try:
+                    # Add style to the prompt if not default
+                    if style != "Default":
+                        prompt += f" in {style} style."
 
-    #                 # Generate Image
-    #                 image = text2img_client.text_to_image(prompt)
-    #                 if image:
-    #                     # Display the Image
-    #                     st.image(image, caption="Generated Image", use_container_width=True)
+                    # Generate Image
+                    image = text2img_client.image_to_image(prompt)
+                    if image:
+                        # Display the Image
+                        st.image(image, caption="Generated Image", use_container_width=True)
 
-    #                     # Prepare the image for download
-    #                     image_bytes = BytesIO()
-    #                     image.save(image_bytes, format="PNG")
-    #                     image_bytes.seek(0)
-
-    #                     # Add a download button
-    #                     st.download_button(
-    #                         label="Download Image",
-    #                         data=image_bytes,
-    #                         file_name="sketchgen_generated_image.png",
-    #                         mime="image/png",
-    #                         help="Click to download the generated image."
-    #                     )
-    #             except Exception as e:
-    #                 st.error(f"An error occurred while generating the image: {e}")
-    #     else:
-    #         st.error("Please enter a prompt!")
+                        # Prepare the image for download
+                        image_bytes = BytesIO()
+                        image.save(image_bytes, format="PNG")
+                        image_bytes.seek(0)
+                        # Add a download button
+                        st.download_button(
+                            label="Download Image",
+                            data=image_bytes,
+                            file_name="sketchgen_generated_image.png",
+                            mime="image/png",
+                            help="Click to download the generated image."
+                        )
+                except Exception as e:
+                    st.error(f"An error occurred while generating the image: {e}")
+        else:
+            st.error("Please enter a prompt!")
 
 
 else:
@@ -118,9 +121,23 @@ else:
     else:
         prompt="Default prompt"
 
-    if generate_button:
-        if uploaded_image:
-            with st.spinner("Generating image..."):
-                img2img_client.image_to_image(uploaded_image,prompt=prompt)
-        else:
-            st.error("Upload an image")
+if generate_button:
+    if uploaded_image:
+        pil_image = Image.open(uploaded_image).convert("RGB")
+        img_byte_arr = BytesIO()
+        pil_image.save(img_byte_arr, format='JPEG')
+        img_byte_arr.seek(0)
+        with st.spinner("Generating image..."):
+            generated_image = img2img_client.image_to_image(
+                image=img_byte_arr,
+                prompt="Transform this sketch into real image",
+                strength=0.8,
+                guidance_scale=7.5,
+            )
+
+            if generated_image:
+                st.image(generated_image, caption="Generated Image")
+            else:
+                st.error("Image generation failed.")
+    else:
+        st.error("Please upload an image.")
