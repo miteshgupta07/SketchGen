@@ -19,11 +19,11 @@ def load_model():
 text2img_client = load_model()
 
 # Title
-st.markdown("<h1 align='center'>SketchGen</h1><h4 align='center' style='font-weight: normal;'>Transform your imagination into images from text or sketches</h4>", unsafe_allow_html=True)
+st.markdown("<h1 align='center'>SketchGen 🎨</h1><h4 align='center' style='font-weight: normal;'>Transform your imagination into images from text or sketches</h4>", unsafe_allow_html=True)
 
 # Sidebar configuration: Allow users to customize image style, resolution, and parameters
 with st.sidebar:
-    with st.expander("**Image Customization**", icon="🛠️",expanded=True):
+    with st.expander("**Image Customization**", icon="🖌️",expanded=True):
         
         # Option to select the style of the generated image
         style = st.radio(label="Select Style", options=["Default", "Photorealistic", "Anime"], index=0, horizontal=True)
