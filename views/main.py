@@ -15,7 +15,7 @@ def load_model():
     text2img_client = InferenceClient("stabilityai/stable-diffusion-3.5-large", token=hf_token)
     return text2img_client
 
-# Load the model once during the app initialization
+# Loading the model once during the app initialization
 text2img_client = load_model()
 
 # Title
