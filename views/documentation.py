@@ -15,7 +15,7 @@ Key technologies used in this project:
 """)
 
 # How to Use SketchGen Section
-st.header("🖼️ How to Use SketchGen")
+st.header("💡How to Use SketchGen")
 st.write("""
 To generate an image:
 1. Navigate to the **Generate with Prompt** tab.
