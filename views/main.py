@@ -38,8 +38,20 @@ with st.sidebar:
         guidance_scale = st.slider("**Guidance Scale**", min_value=5.0, max_value=20.0, value=7.5, step=0.5)
 
 # Option menu to switch between "Generate with Prompt" and "Generate with Image"
-option = option_menu(menu_title="", options=["Generate with Prompt", "Generate with Image"], icons=["camera", "camera"], orientation="horizontal", default_index=0)
 
+option = option_menu(
+    menu_title="",  # Title of the menu
+    options=["Generate with Prompt", "Generate with Image"],  # List of options
+    icons=["pencil", "image"],  # Icons for each option
+    orientation="horizontal",  # Orientation of the menu (horizontal or vertical)
+    default_index=0,  # Default index of the selected option
+    styles={  # Custom styling options
+        "container": {"padding": "5px", "background-color": "#f0f0f5"},  # Container style
+        "icon": {"color": "blue", "font-size": "18px"},  # Icon style
+        "nav-link": {"font-size": "16px", "text-align": "center", "color": "black", "font-weight": "normal"},  # Navigation link style
+        "nav-link-selected": {"background-color": "#2e3d49", "color": "white"},  # Selected option style
+    }
+)
 # Generate image using text prompt if "Generate with Prompt" is selected
 if option == "Generate with Prompt":
     
