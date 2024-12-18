@@ -1,58 +1,71 @@
 import streamlit as st
 
 # Setting the title for the page
-st.title("Documentation 📃")
+st.markdown("<h1 align='center'>Documentation 📃</h1>",unsafe_allow_html=True)
 
 # Overview Section
 st.header("📝 Overview")
 st.write("""
-This chatbot is designed to assist users by answering their queries in a conversational format.
-The project is built using the following technologies:
+**SketchGen** is an innovative tool designed to transform text prompts or sketches into visually stunning images.  
+This project utilizes cutting-edge AI models to deliver accurate and customizable outputs.  
+Key technologies used in this project:
 - **Streamlit**: For creating an interactive web interface.
-- **ChatGroq**: A robust conversational AI backend.
+- **Stable Diffusion 3.5**: A state-of-the-art image generation model.
 - **Python**: Core programming language for logic and integration.
-- **Multilingual Support**: Enables interactions in multiple languages for a global user base. 🌍
 """)
 
-# How to Use the Chatbot Section
-st.header("🤖 How to Use the Chatbot")
+# How to Use SketchGen Section
+st.header("🖼️ How to Use SketchGen")
 st.write("""
-To use the chatbot:
-1. Select the model type and customize parameters from the sidebar.
-2. Choose your preferred language from the sidebar's **Language Options**. 🌐
-3. Enter your query in the chat input box and get instant responses in the selected language.
-4. View your conversation history directly in the chat interface.
+To generate an image:
+1. Navigate to the **Generate with Prompt** tab.
+2. Enter a text description of the image you want to generate.
+3. Customize the **Style**, **Resolution**, and **Generation Parameters** in the sidebar:
+   - Select your preferred **style** (Default, Photorealistic, Anime).
+   - Choose an **image resolution** (512x512, 768x768, 1024x1024).
+   - Adjust **Inference Steps** and **Guidance Scale** as needed.
+4. Click the **Generate** button to create your image.  
+5. Once the image is generated, you can download it directly to your device.
 """)
-st.markdown("**Example Queries:**")
-st.write("- `Who is Elon Musk ?` 🚀 (English)")
-st.write("- `Persistent chat history ke baare mein samjhaaiye.` 📚 (Hindi)")
+st.markdown("**Example Prompts:**")
+st.write("- `A futuristic cityscape at sunset` 🌇")
+st.write("- `An anime-style character holding a magical sword` ✨")
 
 # Features Section
 st.header("✨ Features")
 st.write("""
-The chatbot provides the following features:
-- **Persistent Conversation History**: Maintains the flow of conversation. 🗣️
-- **Customizable Models**: Adjust parameters like temperature and max tokens. ⚙️
-- **Multilingual Support**: Communicate in languages like English, Hindi, Spanish, French, and German. 🌐
+- **Prompt-Based Image Generation**: Create detailed images using descriptive text prompts. 📝
+- **Style Customization**: Choose from Default, Photorealistic, and Anime styles. 🎨
+- **Resolution Options**: Generate images at 512x512, 768x768, or 1024x1024 resolution. 📐
+- **Parameter Adjustments**:
+  - **Inference Steps**: Control the image generation process for greater detail. 🔧
+  - **Guidance Scale**: Adjust the alignment of the image with the provided prompt. 🛠️
+- **Download Capability**: Save your generated images with detailed filenames. 💾
 """)
 
 # FAQs Section
 st.header("❓ FAQs")
 st.markdown("""
-**Q: How can I reset the conversation history?**  
-A: Simply refresh the page to start a new session with an empty chat history. 🔄
+**Q: How do I choose the best parameters for my image?**  
+A: Experiment with **Inference Steps** (higher values for detail) and **Guidance Scale** (7.5 is recommended for most cases).  
 
-**Q: Can the chatbot answer queries in multiple languages?**  
-A: Yes, you can select your preferred language from the sidebar and the chatbot will respond accordingly. 🌍
+**Q: Can I upload sketches to generate images?**  
+A: The **Generate with Image** feature is under development and will be available soon.  
+
+**Q: What styles are available for image generation?**  
+A: You can select from Default, Photorealistic, and Anime styles in the sidebar.  
+
+**Q: What resolutions are supported?**  
+A: You can generate images in 512x512, 768x768, or 1024x1024 resolution. Choose your preference from the sidebar.
 """)
 
 # Acknowledgments Section
 st.header("🙏 Acknowledgments")
 st.write("""
-This project was made possible with the following resources:
-- **LangChain**: For managing chat history and prompts. 🔗
-- **Groq Models**: High-performance conversational AI models. 🧠
+This project was made possible with:
+- **Hugging Face**: Providing the Stable Diffusion 3.5 model and inference APIs. 🤗
+- **Streamlit**: Enabling seamless user interaction and customization. 🚀
 """)
 
 # Footer Section
-st.write("For further details, please refer to the [project repository](https://github.com/miteshgupta07/QA-Chatbot) or contact me through the links provided on the '**About Me**' page. 📞")
+st.write("For further details, please refer to the [project repository](https://github.com/miteshgupta07/SketchGen) or contact me through the **About Developer** page. 📞")
