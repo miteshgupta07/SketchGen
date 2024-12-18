@@ -2,6 +2,7 @@
 
 **SketchGen** is an innovative tool that allows users to generate realistic images from text descriptions or sketches. Powered by the **Stable Diffusion 3.5 model**, it combines cutting-edge AI with creative freedom to produce stunning visuals from user inputs.
 
+
 ## Features 🚀
 
 - **Text-to-Image Generation**: Enter a text prompt and let the AI create images based on your imagination. 📝➡️🖼️
