@@ -56,6 +56,18 @@ You can try out the application on [Streamlit](https://your-deployed-app-link-he
 - **Sketch-to-Image**: Convert sketches into detailed images (Coming soon). ✏️➡️🖼️
 - **More Image Styles**: Additional AI models for unique image styles. 🎨
 
+## Acknowledgment 🙏
+
+We would like to express our gratitude to the following:
+
+- **Hugging Face**: For providing access to the Stable Diffusion 3.5 model. 🤗
+- **Streamlit**: For offering a fantastic framework to build and deploy the web app. 💻
+- **Python and Libraries**: For being the backbone of our project with libraries like PIL and diffusers. 🐍
+- **The Open-Source Community**: For providing inspiration and valuable resources that helped shape this project. 🌍
+
+Thank you to everyone who contributed to this project, whether directly or indirectly! 🙌
+
+
 ## Contributing 🤝
 
 Feel free to fork the project and submit pull requests. If you have any feature requests or bugs to report, please open an issue. 🛠️
