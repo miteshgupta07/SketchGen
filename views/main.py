@@ -18,9 +18,12 @@ def load_model():
 # Load the model once during the app initialization
 text2img_client = load_model()
 
+# Title
+st.markdown("<h1 align='center'>SketchGen</h1><h4 align='center' style='font-weight: normal;'>Transform your imagination into images from text or sketches</h4>", unsafe_allow_html=True)
+
 # Sidebar configuration: Allow users to customize image style, resolution, and parameters
 with st.sidebar:
-    with st.expander("**Image Customization**", icon="🛠️"):
+    with st.expander("**Image Customization**", icon="🛠️",expanded=True):
         
         # Option to select the style of the generated image
         style = st.radio(label="Select Style", options=["Default", "Photorealistic", "Anime"], index=0, horizontal=True)
@@ -67,51 +70,53 @@ if option == "Generate with Prompt":
     # Image generation logic when the button is clicked
     if generate_button:
         if prompt:
-            with st.spinner("Generating image..."):
-                try:
-                    # Modify the prompt if the style is not 'Default'
-                    if style != "Default":
-                        prompt += f" in {style} style."
+            _, col, _ = st.columns([1.5, 1, 1.5])
+            with col:
+                with st.spinner("Generating image..."):
+                    try:
+                        # Modify the prompt if the style is not 'Default'
+                        if style != "Default":
+                            prompt += f" in {style} style."
 
-                    # Call the model's text_to_image function to generate the image
-                    image = text2img_client.text_to_image(
-                        prompt=prompt, 
-                        guidance_scale=guidance_scale, 
-                        num_inference_steps=inference_steps, 
-                        width=width, 
-                        height=height
-                    )
+                        # Call the model's text_to_image function to generate the image
+                        image = text2img_client.text_to_image(
+                            prompt=prompt, 
+                            guidance_scale=guidance_scale, 
+                            num_inference_steps=inference_steps, 
+                            width=width, 
+                            height=height
+                        )
 
-                    if image:
-                        
-                        # Save the generated image in session state for persistence across interactions
-                        st.session_state["generated_image"] = image
-                        
-                        # Convert the image to a byte stream for download
-                        image_bytes = BytesIO()
-                        image.save(image_bytes, format="PNG")
-                        image_bytes.seek(0)
-                        image_from_bytes = Image.open(image_bytes)
-                        image_size = image_from_bytes.size  # Get the image size for the filename
-
-                        with col3:
+                        if image:
                             
-                            # Adjust style name if it is 'Default'
-                            if style == "Default":
-                                style = ""
+                            # Save the generated image in session state for persistence across interactions
+                            st.session_state["generated_image"] = image
                             
-                            # Create a download button with the generated image and its resolution
-                            st.download_button(
-                                label="Download Image",
-                                data=image_bytes,
-                                file_name=f"sketchgen_{style}_generated_image_{image_size[0]}x{image_size[1]}.png",
-                                mime="image/png",
-                                use_container_width=True
-                            )
+                            # Convert the image to a byte stream for download
+                            image_bytes = BytesIO()
+                            image.save(image_bytes, format="PNG")
+                            image_bytes.seek(0)
+                            image_from_bytes = Image.open(image_bytes)
+                            image_size = image_from_bytes.size  # Get the image size for the filename
 
-                except Exception as e:
-                    # Handle any errors that occur during image generation
-                    st.error(f"An error occurred while generating the image: {e}")
+                            with col3:
+                                
+                                # Adjust style name if it is 'Default'
+                                if style == "Default":
+                                    style = ""
+                                
+                                # Create a download button with the generated image and its resolution
+                                st.download_button(
+                                    label="Download Image",
+                                    data=image_bytes,
+                                    file_name=f"sketchgen_{style}_generated_image_{image_size[0]}x{image_size[1]}.png",
+                                    mime="image/png",
+                                    use_container_width=True
+                                )
+
+                    except Exception as e:
+                        # Handle any errors that occur during image generation
+                        st.error(f"An error occurred while generating the image: {e}")
         else:
             # Prompt user to enter a valid prompt if none is provided
             st.error("Please enter a prompt!")
