@@ -2,7 +2,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from huggingface_hub import InferenceClient
-from diffusers import EulerDiscreteScheduler
 from io import BytesIO
 from PIL import Image
 import os
@@ -22,15 +21,19 @@ text2img_client = load_model()
 # Sidebar configuration: Allow users to customize image style, resolution, and parameters
 with st.sidebar:
     with st.expander("**Image Customization**", icon="🛠️"):
+        
         # Option to select the style of the generated image
         style = st.radio(label="Select Style", options=["Default", "Photorealistic", "Anime"], index=0, horizontal=True)
+        
         # Option to select the resolution for the generated image
         image_resolution = st.radio("Image Resolution", options=["512x512", "768x768", "1024x1024"], index=0, horizontal=True)
         width, height = map(int, image_resolution.split('x'))  # Extract width and height for image resolution
 
     with st.expander("**Parameter Customization**", icon="🛠️"):
+        
         # Slider for adjusting inference steps (impact on image detail and generation time)
         inference_steps = st.slider("**Inference Steps**", min_value=10, max_value=100, value=50, step=1)
+        
         # Slider for adjusting the guidance scale (controls how closely the model follows the prompt)
         guidance_scale = st.slider("**Guidance Scale**", min_value=5.0, max_value=20.0, value=7.5, step=0.5)
 
@@ -39,10 +42,13 @@ option = option_menu(menu_title="", options=["Generate with Prompt", "Generate w
 
 # Generate image using text prompt if "Generate with Prompt" is selected
 if option == "Generate with Prompt":
+    
     # Input field for the user to enter a text prompt
-    prompt = st.text_input("Enter your prompt")
+    prompt = st.text_area("Enter your prompt", key="prompt", placeholder="A futuristic cityscape at sunset", height=70)
+    
     col1, col2, col3 = st.columns([1, 1, 1], gap="large")  # Layout for the button and image display
     with col2:
+        
         # Button to trigger the image generation process
         generate_button = st.button("✨ Generate", use_container_width=True, type='primary')
 
@@ -65,8 +71,10 @@ if option == "Generate with Prompt":
                     )
 
                     if image:
+                        
                         # Save the generated image in session state for persistence across interactions
                         st.session_state["generated_image"] = image
+                        
                         # Convert the image to a byte stream for download
                         image_bytes = BytesIO()
                         image.save(image_bytes, format="PNG")
@@ -75,15 +83,18 @@ if option == "Generate with Prompt":
                         image_size = image_from_bytes.size  # Get the image size for the filename
 
                         with col3:
+                            
                             # Adjust style name if it is 'Default'
                             if style == "Default":
                                 style = ""
+                            
                             # Create a download button with the generated image and its resolution
                             st.download_button(
                                 label="Download Image",
                                 data=image_bytes,
                                 file_name=f"sketchgen_{style}_generated_image_{image_size[0]}x{image_size[1]}.png",
-                                mime="image/png"
+                                mime="image/png",
+                                use_container_width=True
                             )
 
                 except Exception as e:
@@ -99,7 +110,8 @@ if option == "Generate with Prompt":
 
 
 else:
-    st.write("Coming Soon....")
+    st.info("The 'Generate with Image' feature is under development and will be available shortly. We appreciate your patience. Stay tuned for updates!")
+
     # prompt=st.text_input("Enter your prompt (Optional)")
     # uploaded_image = st.file_uploader("Upload an Image", type=["jpeg", "jpg", "png"])
 
