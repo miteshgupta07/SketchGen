@@ -1,7 +1,3 @@
-diffusers
-invisible_watermark
-transformers
-accelerate
-safetensors
-torch
 streamlit
+streamlit-option-menu
+huggingface_hub
