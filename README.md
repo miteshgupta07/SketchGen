@@ -35,6 +35,15 @@ You can try out the application on [Streamlit](https://your-deployed-app-link-he
    streamlit run app.py
    ```
 
+## Example Generated Images 📸
+
+Here are some images generated using my SketchGen app:
+
+![sketchgen_generated_image (5)](https://github.com/user-attachments/assets/9664c890-1dee-46fe-a6b7-1731a73967b9)
+![sketchgen_Photorealistic_generated_image_1024x1024](https://github.com/user-attachments/assets/bd81e854-aace-459c-8413-85f2780dea95)
+
+
+
 ## Usage 💡
 
 - Open the app and select between "Generate with Prompt" or "Generate with Image".
